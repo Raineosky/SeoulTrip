@@ -17,62 +17,76 @@
             --text-dark: #2D3436;
             --text-light: #FFFFFF;
             --card-bg: #FFFFFF;
-            --nav-height: 65px; /* 導航列高度 */
+            --nav-height: 65px;
             --safe-bottom: env(safe-area-inset-bottom, 20px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;}
         
-        /* --- App Shell 架構核心 (解決滑動回彈問題) --- */
+        /* --- App Shell 架構 (防回彈) --- */
         html, body {
             width: 100%; height: 100%;
-            overflow: hidden; /* 鎖定 Body，禁止整體網頁捲動 */
+            overflow: hidden; /* 鎖定外部 */
             background-color: var(--bg-main);
         }
 
         body {
             display: flex;
             flex-direction: column;
-            position: fixed; /* 強制固定，避免 iOS 橡皮筋效果 */
+            position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
         }
 
-        /* --- 內容捲動區 (只有這裡可以滑) --- */
+        /* --- 內容捲動區 --- */
         #scroll-container {
-            flex: 1; /* 佔滿剩餘空間 */
+            flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch; /* iOS 滑動慣性 */
+            -webkit-overflow-scrolling: touch;
             background-color: var(--bg-main);
             position: relative;
-            /* 底部預留空間給導航列，避免內容被擋住 */
             padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 20px);
         }
 
+        /* --- 頁面切換機制 (修正重點) --- */
+        .main-section { 
+            display: none !important; /* 預設全部隱藏，權重加高 */
+        }
+        
+        .main-section.active { 
+            display: block !important; /* 啟動時顯示 */
+            animation: fadeIn 0.3s ease; 
+        }
+
+        /* 首頁特殊排版：只有在 active 時才啟用 flex 置中 */
+        #section-home.active {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
         /* --- 1. 首頁樣式 --- */
         #section-home {
-            height: 100%; /* 佔滿 scroll-container */
+            height: 100%;
             min-height: 600px;
             width: 100%;
             background-color: var(--bg-dark);
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* 首頁不需要底部 padding */
-            margin-bottom: -100px; 
+            overflow: hidden;
         }
 
         .hero-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://image.presslogic.com/girls.presslogic.com/wp-content/uploads/2023/07/b8dacb66.jpg?auto=format&w=1242');
-            /* 修改點：縮小至 95% */
             background-size: 95%;
             background-position: center center;
             background-repeat: no-repeat;
             z-index: 0;
-            filter: drop-shadow(0 0 30px rgba(0,0,0,0.5)); /* 增加相框立體感 */
+            filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
         }
         
         .home-content {
@@ -80,7 +94,7 @@
             z-index: 2;
             width: 100%;
             text-align: center;
-            margin-bottom: 35%; /* 文字往上提 */
+            margin-bottom: 35%;
         }
 
         .home-title {
@@ -105,15 +119,11 @@
             backdrop-filter: blur(5px);
         }
 
-        /* --- 通用區塊 --- */
-        .main-section { display: none; }
-        .main-section.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        /* --- 內頁樣式 --- */
         .page-header {
             background: var(--bg-dark);
             color: var(--text-light);
-            padding: 70px 20px 25px; /* 上方加寬 */
+            padding: 70px 20px 25px;
             border-radius: 0 0 30px 30px;
             margin-bottom: 25px;
             position: sticky;
@@ -125,7 +135,7 @@
 
         .container { padding: 0 20px; }
 
-        /* --- 卡片樣式 --- */
+        /* 卡片 */
         .info-card {
             background: var(--card-bg);
             border-radius: 18px;
@@ -142,10 +152,10 @@
         .info-label { color: #888; font-size: 14px; }
         .info-value { font-weight: 600; font-size: 15px; text-align: right;}
 
-        /* --- 行程分頁 --- */
+        /* 行程分頁 */
         .tabs-header-container {
             position: sticky;
-            top: 120px; /* 吸附在 Header 下方 */
+            top: 120px;
             background: var(--bg-main);
             z-index: 9;
             padding: 5px 0 15px 0;
@@ -180,7 +190,7 @@
         .g-map { background: #f8f9fa; color: #3c4043; border: 1px solid #dadce0;}
         .n-map { background: #03C75A; color: white; border: 1px solid #03C75A; }
 
-        /* --- 底部導航列 (固定定位) --- */
+        /* --- 底部導航列 --- */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
             height: calc(var(--nav-height) + var(--safe-bottom));
