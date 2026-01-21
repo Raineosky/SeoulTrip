@@ -1,2 +1,0 @@
-# SeoulTrip
-SeoulTrip
