@@ -163,3 +163,311 @@
             height: calc(var(--nav-height) + var(--safe-area-bottom));
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 10px;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            z-index: 100;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #999; font-size: 11px; font-weight: 600; width: 20%; cursor: pointer; transition: color 0.2s;
+        }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: scale(1.1); transition: transform 0.2s; }
+
+    </style>
+</head>
+<body>
+
+    <section id="section-home" class="main-section active" style="padding-bottom: 0;">
+        <div class="hero-image"></div>
+        <div class="hero-overlay"></div>
+        <div class="home-content">
+            <div class="home-title">FEARLESS</div>
+        </div>
+    </section>
+
+    <section id="section-itinerary" class="main-section">
+        <div class="page-header">
+            <h2><i class="fas fa-route"></i> 行程總覽</h2>
+        </div>
+        <div class="tabs-header-container">
+            <div class="tabs-scroll">
+                <button class="day-tab-btn active" onclick="openDay('day1', this)">Day 1 (1/28)</button>
+                <button class="day-tab-btn" onclick="openDay('day2', this)">Day 2 (1/29)</button>
+                <button class="day-tab-btn" onclick="openDay('day3', this)">Day 3 (1/30)</button>
+                <button class="day-tab-btn" onclick="openDay('day4', this)">Day 4 (1/31)</button>
+                <button class="day-tab-btn" onclick="openDay('day5', this)">Day 5 (2/01)</button>
+            </div>
+        </div>
+        <div class="container">
+            <div id="day1" class="day-content active">
+                <div class="timeline-item">
+                    <div class="time-col">14:05</div>
+                    <div class="content-col">
+                        <div class="card-big-text">抵達金浦機場 (GMP)</div>
+                        <div class="card-detail">17:30 前完成入境。<br>搭乘 <b style="color:var(--primary)">5號線</b> → 乙支路4街站</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-col">19:30</div>
+                    <div class="content-col">
+                        <div class="card-big-text">WecoStay 明洞 Check-in</div>
+                        <div class="card-detail">從乙支路4街站步行前往</div>
+                    </div>
+                </div>
+                <div class="timeline-item food-marker">
+                    <div class="time-col">20:15</div>
+                    <div class="content-col">
+                        <div class="card-big-text">晚餐：荒謬的生肉</div>
+                        <div class="card-detail">明洞店 | 包含換匯行程</div>
+                        <div class="map-links"><a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+            </div>
+            <div id="day2" class="day-content">
+                 <div class="timeline-item">
+                    <div class="time-col">09:30</div>
+                    <div class="content-col">
+                        <div class="card-big-text">景福宮</div>
+                        <div class="card-detail">體驗韓服、參觀宮殿</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B2%BD%EB%B3%B5%EA%B6%81" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                 <div class="timeline-item food-marker">
+                    <div class="time-col">12:00</div>
+                    <div class="content-col">
+                        <div class="card-big-text">三清洞摩西年糕鍋</div>
+                        <div class="card-detail">午餐時間</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%A/9%EC%89%AC%EB%8F%88%EB%82%98" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                 <div class="timeline-item">
+                    <div class="time-col">14:00</div>
+                    <div class="content-col">
+                        <div class="card-big-text">北村 & 益善洞</div>
+                        <div class="card-detail">韓屋村散步、咖啡廳</div>
+                    </div>
+                </div>
+                 <div class="timeline-item food-marker">
+                    <div class="time-col">18:10</div>
+                    <div class="content-col">
+                        <div class="card-big-text">廣藏市場 (富村生拌牛肉)</div>
+                        <div class="card-detail">晚餐：綠豆煎餅、生拌牛肉</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+            </div>
+            <div id="day3" class="day-content">
+                <div class="timeline-item">
+                    <div class="time-col">09:15</div>
+                    <div class="content-col">
+                        <div class="card-big-text">南大門市場</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%82%A8%EB%8C%80%EB%AC%B8%EC%8B%9C%EC%9E%A5" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-col">11:15</div>
+                    <div class="content-col">
+                        <div class="card-big-text">樂天超市 首爾站</div>
+                        <div class="card-detail">採買後回飯店放東西，再前往龍山</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-col">14:30</div>
+                    <div class="content-col">
+                        <div class="card-big-text">龍山解放村</div>
+                        <div class="card-detail">CAFE TAJAGI / Villa Coffeebar</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%ED%95%B4%EB%B0%A9%EC%B4%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                <div class="timeline-item food-marker">
+                    <div class="time-col">18:00</div>
+                    <div class="content-col">
+                        <div class="card-big-text">弘大商圈 (一片里肌)</div>
+                        <div class="card-detail">晚餐預約 19:30</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+            </div>
+            <div id="day4" class="day-content">
+                <div class="timeline-item">
+                    <div class="time-col">10:00</div>
+                    <div class="content-col">
+                        <div class="card-big-text">奉恩寺</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B4%89%EC%9D%80%EC%82%AC" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                <div class="timeline-item food-marker">
+                    <div class="time-col">11:30</div>
+                    <div class="content-col">
+                        <div class="card-big-text">Gom Ba Wie</div>
+                        <div class="card-detail">午餐：韓牛、牛腸</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B3%B0%EB%B0%94%EC%9C%84" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-col">13:30</div>
+                    <div class="content-col">
+                        <div class="card-big-text">江南大道</div>
+                        <div class="card-detail">逛街購物</div>
+                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C" target="_blank" class="map-link n-map">Naver Map</a></div>
+                    </div>
+                </div>
+            </div>
+            <div id="day5" class="day-content">
+                <div class="timeline-item">
+                    <div class="time-col">11:10</div>
+                    <div class="content-col">
+                        <div class="card-big-text">金浦機場 (GMP)</div>
+                        <div class="card-detail">回程班機</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-weather" class="main-section">
+        <div class="page-header">
+             <h2><i class="fas fa-cloud-sun"></i> 首爾天氣</h2>
+        </div>
+        <div class="container">
+            <div class="info-card" style="padding: 0; overflow: hidden; background: transparent; box-shadow: none;">
+                <a class="weatherwidget-io" href="https://forecast7.com/zh/37d57126d98/seoul/" data-label_1="SEOUL" data-label_2="天氣預報" data-font="Roboto" data-icons="Climacons Animated" data-mode="Forecast" data-theme="weather_one" >SEOUL Weather</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-food" class="main-section">
+        <div class="page-header">
+            <h2><i class="fas fa-utensils"></i> 精選美食</h2>
+        </div>
+        <div class="container">
+            <div class="info-card">
+                <div class="card-big-text">荒謬的生肉 明洞店</div>
+                <div class="card-detail">Day 1 晚餐 | 烤肉吃到飽</div>
+                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver Map</a></div>
+            </div>
+            <div class="info-card">
+                <div class="card-big-text">富村生拌牛肉</div>
+                <div class="card-detail">Day 2 晚餐 | 廣藏市場米其林</div>
+                <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
+            </div>
+            <div class="info-card">
+                <div class="card-big-text">一片里肌 弘大店</div>
+                <div class="card-detail">Day 3 晚餐 | 精緻韓牛</div>
+                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver Map</a></div>
+            </div>
+            <p class="card-label" style="margin-top: 20px;">附近推薦</p>
+            <div class="info-card">
+                <div class="card-big-text">明洞餃子</div>
+                <div class="map-links"><a href="https://map.naver.com/p/search/%EB%AA%85%EB%8F%99%EA%B5%90%EC%9E%90%20%EB%B3%B8%EC%A0%90" target="_blank" class="map-link n-map">Naver Map</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-stay" class="main-section">
+        <div class="page-header">
+            <h2><i class="fas fa-bed"></i> 住宿資訊</h2>
+        </div>
+        <div class="container">
+            <div class="info-card">
+                <span class="card-label">HOTEL</span>
+                <div class="card-big-text">WecoStay 明洞</div>
+                <div class="info-row" style="margin-top: 15px;">
+                    <span class="info-label">入住日期</span><span class="info-value">1/28 - 2/01</span>
+                </div>
+                <div class="map-links" style="margin-top: 15px;">
+                    <a href="https://map.naver.com/p/search/WecoStay%20Myeongdong" target="_blank" class="map-link n-map" style="padding: 12px;">Naver Map 導航</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-flight" class="main-section">
+        <div class="page-header">
+            <h2><i class="fas fa-plane"></i> 航班資訊</h2>
+        </div>
+        <div class="container">
+            <div class="info-card" style="border-left: 5px solid var(--primary);">
+                <span class="card-label">去程 | 1月28日</span>
+                <div class="card-big-text" style="color: var(--primary);">TW668</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 800;">14:05</div>
+                        <div style="font-size: 13px; color:#666;">松山 (TSA) T1</div>
+                    </div>
+                    <i class="fas fa-arrow-right" style="color: #ddd;"></i>
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 800;">17:30</div>
+                        <div style="font-size: 13px; color:#666;">金浦 (GMP) T1</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-card" style="border-left: 5px solid var(--accent);">
+                <span class="card-label" style="color: var(--accent);">回程 | 2月1日</span>
+                <div class="card-big-text" style="color: var(--accent);">TW667</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 800;">11:10</div>
+                        <div style="font-size: 13px; color:#666;">金浦 (GMP) T1</div>
+                    </div>
+                    <i class="fas fa-arrow-right" style="color: #ddd;"></i>
+                    <div style="text-align: center;">
+                        <div style="font-size: 22px; font-weight: 800;">13:05</div>
+                        <div style="font-size: 13px; color:#666;">松山 (TSA) T1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchSection('section-home', this)">
+            <i class="fas fa-home"></i><span>首頁</span>
+        </div>
+        <div class="nav-item" onclick="switchSection('section-itinerary', this)">
+            <i class="fas fa-list-ul"></i><span>行程</span>
+        </div>
+         <div class="nav-item" onclick="switchSection('section-weather', this)">
+            <i class="fas fa-cloud-sun"></i><span>天氣</span>
+        </div>
+        <div class="nav-item" onclick="switchSection('section-food', this)">
+            <i class="fas fa-utensils"></i><span>美食</span>
+        </div>
+        <div class="nav-item" onclick="switchSection('section-stay', this)">
+            <i class="fas fa-bed"></i><span>住宿</span>
+        </div>
+        <div class="nav-item" onclick="switchSection('section-flight', this)">
+            <i class="fas fa-plane"></i><span>航班</span>
+        </div>
+    </nav>
+
+    <script>
+        function switchSection(sectionId, navElement) {
+            const sections = document.querySelectorAll('.main-section');
+            sections.forEach(s => s.classList.remove('active'));
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(n => n.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            navElement.classList.add('active');
+            if(sectionId !== 'section-home') document.getElementById(sectionId).scrollTo(0,0);
+        }
+        function openDay(dayId, tabElement) {
+            const dayContents = document.querySelectorAll('.day-content');
+            dayContents.forEach(dc => dc.classList.remove('active'));
+            const dayTabs = document.querySelectorAll('.day-tab-btn');
+            dayTabs.forEach(dt => dt.classList.remove('active'));
+            document.getElementById(dayId).classList.add('active');
+            tabElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
