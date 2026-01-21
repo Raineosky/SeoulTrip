@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* LE SSERAFIM 配色 */
             --bg-main: #F8F9FA;
             --bg-dark: #1A1A2E;
             --primary: #6C5CE7;
@@ -19,7 +18,8 @@
             --text-light: #FFFFFF;
             --card-bg: #FFFFFF;
             --nav-height: 65px;
-            --safe-area-bottom: env(safe-area-inset-bottom);
+            /* 取得手機底部的安全區域高度 */
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px); 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;}
@@ -27,32 +27,31 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-dark);
-            height: 100dvh;
+            height: 100dvh; /* 強制全螢幕高度 */
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow: hidden; /* 禁止 body 捲動，讓內層捲動 */
         }
 
-        /* --- 主頁 Hero Section (更新重點) --- */
+        /* --- 主頁 Hero Section --- */
         #section-home {
             height: 100%;
             background-color: var(--bg-dark);
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
 
         .hero-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* 更新照片連結 */
-            background-image: url('https://4kwallpapers.com/images/wallpapers/le-sserafim-hot-3840x2160-21956.jpg');
+            /* ▼▼▼ 已更新為你的 Google Drive 照片 (使用直連轉換格式) ▼▼▼ */
+            background-image: url('https://drive.google.com/uc?export=view&id=1npQsUd6yZ9vcLL4mmGoQkQpi5kqtq9pP');
             background-size: cover;
-            /* 橫式照片在手機上置中，確保成員入鏡 */
-            background-position: center center; 
+            background-position: center center;
             z-index: 0;
         }
         
-        /* 黑色遮罩，讓文字稍微清楚一點，但不要太深 */
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,29 +64,29 @@
             z-index: 2;
             width: 100%;
             text-align: center;
-            /* 依照需求：往上縮三分之二 (大約在畫面上方 30% 的位置) */
-            top: 20%; 
+            top: 25%; /* 文字位置 */
         }
 
-        /* FEARLESS LOGO 風格文字 */
         .home-title {
-            font-size: 48px;
+            font-size: 56px; /* 加大字體 */
             font-weight: 900;
             font-style: italic;
             color: #FFFFFF;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(108, 92, 231, 0.8);
-            /* 模擬 Logo 的邊框感 */
+            letter-spacing: 3px;
+            text-shadow: 0 0 25px rgba(108, 92, 231, 0.9);
             -webkit-text-stroke: 1px rgba(255,255,255,0.8);
         }
 
-        /* --- 通用區塊 --- */
+        /* --- 內容區塊設定 --- */
         .main-section {
             display: none;
             flex: 1;
-            overflow-y: auto;
+            overflow-y: auto; /* 允許垂直捲動 */
+            overflow-x: hidden;
+            /* 底部留白，確保內容不被導航列擋住 */
             padding-bottom: calc(var(--nav-height) + var(--safe-area-bottom) + 20px);
             background: var(--bg-main);
+            -webkit-overflow-scrolling: touch; /* iOS 順暢捲動 */
         }
         .main-section.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -105,7 +104,7 @@
         }
         .page-header h2 { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 
-        /* --- 內容卡片樣式 --- */
+        /* --- 卡片與文字 --- */
         .container { padding: 0 20px; }
         .info-card {
             background: var(--card-bg);
@@ -123,7 +122,7 @@
         .info-label { color: #888; font-size: 14px; }
         .info-value { font-weight: 600; font-size: 15px; text-align: right;}
 
-        /* --- 行程時間軸 --- */
+        /* --- 行程分頁 --- */
         .tabs-header-container {
             position: sticky;
             top: 75px;
@@ -156,24 +155,34 @@
         .g-map { background: #f1f3f4; color: #3c4043; }
         .n-map { background: #03C75A; color: white; }
 
-        /* --- 底部導航列 --- */
+        /* --- 底部導航列 (修正重點) --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            height: calc(var(--nav-height) + var(--safe-area-bottom));
+            position: fixed; /* 強制固定 */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: auto;
+            min-height: var(--nav-height);
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-around;
-            align-items: flex-start;
-            padding-top: 10px;
-            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
-            z-index: 100;
+            align-items: center;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.08);
+            z-index: 9999; /* 提高層級 */
             border-top: 1px solid rgba(0,0,0,0.05);
+            /* 確保內容不貼底，留給 Home Indicator 空間 */
+            padding-bottom: var(--safe-area-bottom);
+            padding-top: 8px;
         }
+        
         .nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: #999; font-size: 11px; font-weight: 600; width: 20%; cursor: pointer; transition: color 0.2s;
+            /* 修正點擊區域 */
+            padding-bottom: 8px; 
         }
         .nav-item i { font-size: 20px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
