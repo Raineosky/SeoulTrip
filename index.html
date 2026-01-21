@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* 配色設定 */
             --bg-main: #F8F9FA;
             --bg-dark: #1A1A2E;
             --primary: #6C5CE7;
@@ -18,10 +17,7 @@
             --text-dark: #2D3436;
             --text-light: #FFFFFF;
             --card-bg: #FFFFFF;
-            
-            /* 導航列基礎高度 */
             --nav-base-height: 60px;
-            /* 抓取 iPhone 底部安全區域距離 (瀏海屏專用) */
             --safe-bottom: env(safe-area-inset-bottom, 20px);
         }
 
@@ -33,47 +29,47 @@
             background-color: var(--bg-main);
             color: var(--text-dark);
             min-height: 100vh;
-            /* 預留底部空間給固定的導航列，避免內容被擋住 */
             padding-bottom: calc(var(--nav-base-height) + var(--safe-bottom) + 30px);
             position: relative;
         }
 
-        /* --- 1. 首頁 (全螢幕設定) --- */
+        /* --- 1. 首頁 (視覺調整版) --- */
         #section-home {
-            /* 高度扣掉導航列與安全區，確保剛好滿版 */
             height: calc(100vh - var(--nav-base-height) - var(--safe-bottom));
             min-height: 500px;
             width: 100%;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-dark); /* 背景底色 */
             position: relative;
             overflow: hidden;
+            /* 使用 Flexbox 讓內容垂直置中 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* 更新後的首頁照片連結 */
             background-image: url('https://image.presslogic.com/girls.presslogic.com/wp-content/uploads/2023/07/b8dacb66.jpg?auto=format&w=1242');
-            background-size: cover;
-            background-position: center top; 
+            /* 關鍵修改：將圖片縮小為 90% 並置中，創造相框感 */
+            background-size: 90%;
+            background-position: center center;
+            background-repeat: no-repeat;
             z-index: 0;
+            /* 增加一點陰影讓照片浮起來 */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
         }
         
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* 漸層遮罩，讓文字更清楚 */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
-            z-index: 1;
-        }
+        /* 移除舊的遮罩，因為照片縮小了 */
+        .hero-overlay { display: none; }
 
         .home-content {
-            position: absolute;
+            position: relative; /* 改為相對定位 */
             z-index: 2;
             width: 100%;
             text-align: center;
-            /* FEARLESS 文字位置 */
-            top: 15%;
+            /* 稍微往上偏移，避免擋住照片重點 */
+            margin-bottom: 20%; 
         }
 
         .home-title {
@@ -82,20 +78,35 @@
             font-style: italic;
             color: #FFFFFF;
             letter-spacing: 3px;
-            text-shadow: 0 0 30px rgba(108, 92, 231, 0.9);
-            opacity: 0.95;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
         }
+
+        /* 新增的副標題樣式 */
+        .home-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 2px;
+            font-weight: 500;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            /* 在副標題上下加一點線條裝飾 */
+            display: inline-block;
+            position: relative;
+        }
+        .home-subtitle::before, .home-subtitle::after {
+            content: ''; position: absolute; top: 50%; width: 30px; height: 1px; background: rgba(255,255,255,0.6);
+        }
+        .home-subtitle::before { left: -40px; }
+        .home-subtitle::after { right: -40px; }
 
         /* --- 頁面通用設定 --- */
         .main-section { display: none; }
         .main-section.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 頁面標題區塊 - 調整 Padding */
         .page-header {
             background: var(--bg-dark);
             color: var(--text-light);
-            /* 關鍵修改：上方 padding 加大到 80px (約 2cm)，讓標題下移 */
             padding: 80px 20px 25px; 
             border-radius: 0 0 30px 30px;
             margin-bottom: 25px;
@@ -128,7 +139,6 @@
         /* --- 行程分頁按鈕 --- */
         .tabs-header-container {
             position: sticky;
-            /* 配合標題的高度調整 sticky 位置 */
             top: 130px; 
             background: var(--bg-main);
             z-index: 9;
@@ -157,7 +167,6 @@
         .food-marker .time-col { color: var(--accent); }
         .food-marker .content-col::before { background: var(--accent); }
         
-        /* 地圖按鈕 */
         .map-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;}
         .map-link { 
             flex: 1; min-width: 40%;
@@ -167,48 +176,32 @@
         .g-map { background: #f8f9fa; color: #3c4043; border: 1px solid #dadce0;}
         .n-map { background: #03C75A; color: white; border: 1px solid #03C75A; box-shadow: 0 2px 5px rgba(3, 199, 90, 0.2);}
 
-        /* --- 底部導航列 (完美貼合版) --- */
+        /* --- 底部導航列 --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            
-            /* 高度 = 導航按鈕區 + iPhone 底部安全區 */
+            position: fixed; bottom: 0; left: 0; right: 0;
             height: calc(var(--nav-base-height) + var(--safe-bottom));
-            
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(0,0,0,0.06);
-            z-index: 9999;
-            
-            display: flex; 
-            justify-content: space-around; 
-            align-items: flex-start;
-
-            padding-top: 8px;
-            /* 讓 padding 把內容撐上去，避開安全區 */
-            padding-bottom: var(--safe-bottom);
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0,0,0,0.06); z-index: 9999;
+            display: flex; justify-content: space-around; align-items: flex-start;
+            padding-top: 8px; padding-bottom: var(--safe-bottom);
             box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
         }
-        
         .nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: #999; font-size: 10px; font-weight: 600; width: 20%; cursor: pointer; transition: color 0.2s;
-            height: 50px;
+            color: #999; font-size: 10px; font-weight: 600; width: 20%; cursor: pointer; transition: color 0.2s; height: 50px;
         }
         .nav-item i { font-size: 20px; margin-bottom: 5px; }
         .nav-item.active { color: var(--primary); }
         .nav-item.active i { transform: scale(1.15); transition: transform 0.2s; color: var(--primary); }
-
     </style>
 </head>
 <body>
 
     <div id="section-home" class="main-section active">
         <div class="hero-image"></div>
-        <div class="hero-overlay"></div>
         <div class="home-content">
             <div class="home-title">FEARLESS</div>
+            <div class="home-subtitle">1/28-2/1韓國之旅</div>
         </div>
     </div>
 
@@ -261,7 +254,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="day2" class="day-content">
                 <div class="timeline-item">
                     <div class="time-col">09:30</div>
@@ -319,7 +311,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="day3" class="day-content">
                 <div class="timeline-item">
                     <div class="time-col">09:15</div>
@@ -365,7 +356,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="day4" class="day-content">
                 <div class="timeline-item">
                     <div class="time-col">10:00</div>
@@ -400,7 +390,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="day5" class="day-content">
                 <div class="timeline-item">
                     <div class="time-col">11:10</div>
@@ -433,41 +422,92 @@
 
     <div id="section-food" class="main-section">
         <div class="page-header">
-            <h2><i class="fas fa-utensils"></i> 精選美食</h2>
+            <h2><i class="fas fa-utensils"></i> 精選美食懶人包</h2>
         </div>
         <div class="container">
+            <p class="card-label" style="margin-bottom: 15px;">行程區域推薦 (不重複)</p>
+            
             <div class="info-card">
-                <div class="card-big-text">荒謬的生肉 明洞店</div>
-                <div class="card-detail">Day 1 晚餐 | 烤肉吃到飽</div>
+                <div class="card-big-text">明洞餃子 本店 (명동교자)</div>
+                <div class="card-detail">位置：明洞 | 米其林必比登推薦，刀削麵與蒸餃名店。</div>
                 <div class="map-links">
-                    <a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0+%EB%AA%85%EB%8F%99%EC%A0%90" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                    <a href="https://map.naver.com/p/search/명동교자 본점" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=明洞餃子+本店" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
                 </div>
             </div>
+
             <div class="info-card">
-                <div class="card-big-text">富村生拌牛肉</div>
-                <div class="card-detail">Day 2 晚餐 | 廣藏市場米其林</div>
+                <div class="card-big-text">申美京弘大辣炒雞排 (신미경홍대닭갈비)</div>
+                <div class="card-detail">位置：弘大商圈 | 起司瀑布辣炒雞排，觀光客必吃人氣店。</div>
                 <div class="map-links">
-                    <a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Buchon+Yukhoe" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                    <a href="https://map.naver.com/p/search/신미경홍대닭갈비" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=申美京弘大辣炒雞排" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
                 </div>
             </div>
+
             <div class="info-card">
-                <div class="card-big-text">一片里肌 弘大店</div>
-                <div class="card-detail">Day 3 晚餐 | 精緻韓牛</div>
+                <div class="card-big-text">土俗村蔘雞湯 (토속촌삼계탕)</div>
+                <div class="card-detail">位置：景福宮旁 | 首爾最以著名的蔘雞湯老店，湯頭濃郁。</div>
                 <div class="map-links">
-                    <a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Ilpyeon+Deungsim+Hongdae" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                    <a href="https://map.naver.com/p/search/토속촌삼계탕" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=土俗村蔘雞湯" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
                 </div>
             </div>
-            <p class="card-label" style="margin-top: 20px;">附近推薦</p>
+
             <div class="info-card">
-                <div class="card-big-text">明洞餃子</div>
+                <div class="card-big-text">清水堂 (청수당)</div>
+                <div class="card-detail">位置：益善洞韓屋村 | 絕美庭園造景咖啡廳，拍照打卡聖地。</div>
                 <div class="map-links">
-                    <a href="https://map.naver.com/p/search/%EB%AA%85%EB%8F%99%EA%B5%90%EC%9E%90%20%EB%B3%B8%EC%A0%90" target="_blank" class="map-link n-map">Naver</a>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Myeongdong+Kyoja" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                    <a href="https://map.naver.com/p/search/청수당 익선동" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=益善洞+清水堂" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
                 </div>
             </div>
+
+            <div class="info-card">
+                <div class="card-big-text">順熙家綠豆煎餅 (순희네빈대떡)</div>
+                <div class="card-detail">位置：廣藏市場內 | 市場內最著名的排隊綠豆煎餅攤位。</div>
+                <div class="map-links">
+                    <a href="https://map.naver.com/p/search/순희네빈대떡 광장시장" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=廣藏市場+順熙家綠豆煎餅" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-big-text">喜樂帶魚 (희락갈치)</div>
+                <div class="card-detail">位置：南大門帶魚胡同 | 辣燉帶魚老字號，重口味愛好者必試。</div>
+                <div class="map-links">
+                    <a href="https://map.naver.com/p/search/남대문시장 희락갈치" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=南大門市場+喜樂帶魚" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-big-text">No Stress Burger (노스트레스버거)</div>
+                <div class="card-detail">位置：解放村 | 首爾知名美式漢堡店，適合看夕陽前後享用。</div>
+                <div class="map-links">
+                    <a href="https://map.naver.com/p/search/해방촌 노스트레스버거" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=解放村+No+Stress+Burger" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                </div>
+            </div>
+
+             <div class="info-card">
+                <div class="card-big-text">河東館 COEX店 (하동관)</div>
+                <div class="card-detail">位置：COEX Mall內 | 80年老店，清淡鮮甜的韓牛牛骨湯飯。</div>
+                <div class="map-links">
+                    <a href="https://map.naver.com/p/search/하동관 코엑스몰점" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=河東館+COEX店" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-big-text">Alver Cafe (알베르)</div>
+                <div class="card-detail">位置：江南站附近 | 被樹木環繞的大型獨棟咖啡廳，逛街休息好去處。</div>
+                <div class="map-links">
+                    <a href="https://map.naver.com/p/search/강남역 알베르" target="_blank" class="map-link n-map">Naver</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=江南站+Alver+Cafe" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
