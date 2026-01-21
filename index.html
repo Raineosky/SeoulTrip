@@ -17,109 +17,80 @@
             --text-dark: #2D3436;
             --text-light: #FFFFFF;
             --card-bg: #FFFFFF;
-            --nav-base-height: 60px;
+            --nav-height: 60px;
             --safe-bottom: env(safe-area-inset-bottom, 20px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;}
         
         html { background-color: var(--bg-main); }
-
         body {
             background-color: var(--bg-main);
             color: var(--text-dark);
             min-height: 100vh;
-            /* 預留底部空間給固定的導航列 */
-            padding-bottom: calc(var(--nav-base-height) + var(--safe-bottom) + 30px);
+            padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 30px);
             position: relative;
         }
 
-        /* --- 1. 首頁 (回到原本架構 + 95% 縮放) --- */
+        /* --- 1. 首頁 --- */
         #section-home {
-            height: calc(100vh - var(--nav-base-height) - var(--safe-bottom));
+            height: calc(100vh - var(--nav-height) - var(--safe-bottom));
             min-height: 500px;
             width: 100%;
             background-color: var(--bg-dark);
             position: relative;
             overflow: hidden;
-            /* 讓內容垂直置中 */
-            display: flex;
             align-items: center;
             justify-content: center;
+            display: none; 
         }
+        
+        #section-home.active { display: flex; animation: fadeIn 0.4s ease; }
 
         .hero-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://image.presslogic.com/girls.presslogic.com/wp-content/uploads/2023/07/b8dacb66.jpg?auto=format&w=1242');
-            /* 關鍵：縮小至 95% */
             background-size: 95%;
             background-position: center center;
             background-repeat: no-repeat;
             z-index: 0;
-            filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 0 40px rgba(0,0,0,0.6));
         }
         
         .home-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20%; /* 文字稍微往上 */
+            position: relative; z-index: 2; width: 100%; text-align: center; margin-bottom: 25%;
         }
 
         .home-title {
-            font-size: 60px;
-            font-weight: 900;
-            font-style: italic;
-            color: #FFFFFF;
-            letter-spacing: 3px;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
-            margin-bottom: 10px;
+            font-size: 60px; font-weight: 900; font-style: italic; color: #FFFFFF; letter-spacing: 3px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.9); margin-bottom: 8px;
         }
 
-        /* 新增副標題樣式 */
         .home-subtitle {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 2px;
-            font-weight: 500;
-            background: rgba(0,0,0,0.4);
-            padding: 6px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            backdrop-filter: blur(4px);
+            font-size: 16px; color: rgba(255, 255, 255, 0.95); letter-spacing: 2px; font-weight: 500;
+            background: rgba(0,0,0,0.4); padding: 6px 18px; border-radius: 20px;
+            display: inline-block; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* --- 頁面通用設定 --- */
+        /* --- 通用 --- */
         .main-section { display: none; }
         .main-section.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .page-header {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            /* 上方 Padding 加大，讓標題下移 */
-            padding: 80px 20px 25px; 
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 25px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            background: var(--bg-dark); color: var(--text-light);
+            padding: 70px 20px 25px; border-radius: 0 0 30px 30px; margin-bottom: 25px;
+            position: sticky; top: 0; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
-        .page-header h2 { font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 12px; letter-spacing: 1px; }
+        .page-header h2 { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 
         .container { padding: 0 20px; }
         
-        /* --- 卡片樣式 --- */
+        /* --- 卡片 (美食頁用，保持展開) --- */
         .info-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px;
-            margin-bottom: 18px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.02);
+            background: var(--card-bg); border-radius: 18px; padding: 22px; margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.02);
         }
         .card-label { color: var(--primary); font-size: 13px; font-weight: 700; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 1px;}
         .card-big-text { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
@@ -129,14 +100,9 @@
         .info-label { color: #888; font-size: 14px; }
         .info-value { font-weight: 600; font-size: 15px; text-align: right;}
 
-        /* --- 行程分頁按鈕 --- */
+        /* --- 行程分頁 (Tabs) --- */
         .tabs-header-container {
-            position: sticky;
-            top: 130px; 
-            background: var(--bg-main);
-            z-index: 9;
-            padding: 10px 0 15px 0;
-            margin-bottom: 5px;
+            position: sticky; top: 120px; background: var(--bg-main); z-index: 9; padding: 5px 0 15px 0; margin-bottom: 5px;
         }
         .tabs-scroll { display: flex; overflow-x: auto; padding: 0 20px; gap: 12px; }
         .tabs-scroll::-webkit-scrollbar { display: none; }
@@ -147,32 +113,71 @@
         }
         .day-tab-btn.active {
             background: var(--primary); color: white; border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4); transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4); transform: scale(1.05);
         }
         .day-content { display: none; padding-bottom: 10px; }
         .day-content.active { display: block; animation: fadeIn 0.4s ease; }
         
-        /* --- 行程時間軸 --- */
-        .timeline-item { display: flex; margin-bottom: 24px; }
-        .time-col { font-size: 14px; font-weight: 800; color: var(--primary); min-width: 75px; padding-top: 5px;}
-        .content-col { flex: 1; background: white; padding: 18px; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative;}
-        .content-col::before { content: ''; position: absolute; left: -6px; top: 20px; width: 12px; height: 12px; background: var(--primary); border-radius: 50%; border: 2px solid var(--bg-main);}
-        .food-marker .time-col { color: var(--accent); }
-        .food-marker .content-col::before { background: var(--accent); }
+        /* --- 折疊式行程卡片 (Accordion) --- */
+        .accordion-item {
+            background: white; border-radius: 16px; margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden;
+            transition: all 0.3s ease; border: 1px solid rgba(0,0,0,0.02);
+        }
         
-        .map-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;}
+        /* 標題區 (永遠顯示) */
+        .accordion-header {
+            padding: 18px; display: flex; align-items: center; cursor: pointer;
+            position: relative;
+        }
+        .accordion-header:active { background-color: #f9f9f9; }
+
+        /* 時間 */
+        .acc-time {
+            font-size: 14px; font-weight: 800; color: var(--primary);
+            min-width: 60px; margin-right: 10px;
+        }
+        .food-marker .acc-time { color: var(--accent); }
+
+        /* 地點名稱 */
+        .acc-title {
+            flex: 1; font-size: 17px; font-weight: 700; color: var(--text-dark);
+        }
+
+        /* 箭頭圖示 */
+        .acc-icon {
+            color: #ccc; transition: transform 0.3s;
+        }
+        
+        /* 內容區 (預設隱藏) */
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;
+            background-color: #fafafa; border-top: 1px solid #eee;
+        }
+        .accordion-inner { padding: 18px; }
+
+        /* 展開狀態 */
+        .accordion-item.open .acc-icon { transform: rotate(180deg); color: var(--primary); }
+        .food-marker.open .acc-icon { color: var(--accent); }
+        .accordion-item.open { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+
+        /* 內容文字 */
+        .acc-detail { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 15px; }
+
+        /* 地圖連結 */
+        .map-links { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;}
         .map-link { 
             flex: 1; min-width: 40%;
             text-align: center; padding: 10px; border-radius: 10px; font-size: 13px; text-decoration: none; font-weight: 600; 
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .g-map { background: #f8f9fa; color: #3c4043; border: 1px solid #dadce0;}
-        .n-map { background: #03C75A; color: white; border: 1px solid #03C75A; box-shadow: 0 2px 5px rgba(3, 199, 90, 0.2);}
+        .g-map { background: #fff; color: #3c4043; border: 1px solid #dadce0;}
+        .n-map { background: #03C75A; color: white; border: 1px solid #03C75A; box-shadow: 0 2px 5px rgba(3, 199, 90, 0.2); }
 
-        /* --- 底部導航列 (完美貼合版) --- */
+        /* --- 底部導航 --- */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            height: calc(var(--nav-base-height) + var(--safe-bottom));
+            height: calc(var(--nav-height) + var(--safe-bottom));
             background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid rgba(0,0,0,0.06); z-index: 9999;
             display: flex; justify-content: space-around; align-items: flex-start;
@@ -186,6 +191,7 @@
         .nav-item i { font-size: 20px; margin-bottom: 5px; }
         .nav-item.active { color: var(--primary); }
         .nav-item.active i { transform: scale(1.15); transition: transform 0.2s; color: var(--primary); }
+
     </style>
 </head>
 <body>
@@ -213,189 +219,269 @@
         </div>
         <div class="container">
             <div id="day1" class="day-content active">
-                <div class="timeline-item">
-                    <div class="time-col">14:05</div>
-                    <div class="content-col">
-                        <div class="card-big-text">抵達金浦機場 (GMP)</div>
-                        <div class="card-detail">17:30 前完成入境手續。<br>搭乘 <b style="color:var(--primary)">5號線</b> → 乙支路4街站</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EA%B9%80%ED%8F%AC%EA%B3%B5%ED%95%AD" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Gimpo+International+Airport" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">14:05</div>
+                        <div class="acc-title">抵達金浦機場 (GMP)</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">17:30 前完成入境手續。<br>搭乘 <b style="color:var(--primary)">5號線</b> → 乙支路4街站</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EA%B9%80%ED%8F%AC%EA%B3%B5%ED%95%AD" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Gimpo+International+Airport" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">19:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">WecoStay 明洞</div>
-                        <div class="card-detail">Check-in (從乙支路4街站步行)</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/WecoStay%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=WecoStay+Myeongdong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">19:30</div>
+                        <div class="acc-title">WecoStay 明洞</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">Check-in (從乙支路4街站步行)</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/WecoStay%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=WecoStay+Myeongdong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">20:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">晚餐：荒謬的生肉</div>
-                        <div class="card-detail">明洞店 | 包含換匯行程</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0+%EB%AA%85%EB%8F%99%EC%A0%90" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item food-marker" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">20:15</div>
+                        <div class="acc-title">晚餐：荒謬的生肉</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">明洞店 | 包含換匯行程</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0+%EB%AA%85%EB%8F%99%EC%A0%90" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="day2" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">09:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">景福宮</div>
-                        <div class="card-detail">體驗韓服、參觀宮殿</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EA%B2%BD%EB%B3%B5%EA%B6%81" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">09:30</div>
+                        <div class="acc-title">景福宮</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">體驗韓服、參觀宮殿</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EA%B2%BD%EB%B3%B5%EA%B6%81" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">12:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">三清洞摩西年糕鍋</div>
-                        <div class="card-detail">午餐時間 (吃休錢走)</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%A/9%EC%89%AC%EB%8F%88%EB%82%98" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Mukshidonna+Samcheongdong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item food-marker" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">12:00</div>
+                        <div class="acc-title">三清洞摩西年糕鍋</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">午餐時間 (吃休錢走)</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%A/9%EC%89%AC%EB%8F%88%EB%82%98" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Mukshidonna+Samcheongdong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">14:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">北村韓屋村</div>
-                        <div class="card-detail">韓屋村散步拍照</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%B6%81%EC%B4%8C%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Bukchon+Hanok+Village" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">14:00</div>
+                        <div class="acc-title">北村韓屋村</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">韓屋村散步拍照</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%B6%81%EC%B4%8C%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Bukchon+Hanok+Village" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">16:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">益善洞韓屋村</div>
-                        <div class="card-detail">文青咖啡廳、小店</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EC%9D%B5%EC%84%A0%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Ikseon-dong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">16:00</div>
+                        <div class="acc-title">益善洞韓屋村</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">文青咖啡廳、小店</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EC%9D%B5%EC%84%A0%EB%8F%99" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Ikseon-dong" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">18:10</div>
-                    <div class="content-col">
-                        <div class="card-big-text">廣藏市場 (富村生拌牛肉)</div>
-                        <div class="card-detail">晚餐：綠豆煎餅、生拌牛肉</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Buchon+Yukhoe" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item food-marker" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">18:10</div>
+                        <div class="acc-title">廣藏市場 (富村生拌牛肉)</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">晚餐：綠豆煎餅、生拌牛肉</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Buchon+Yukhoe" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="day3" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">09:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">南大門市場</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%82%A8%EB%8C%80%EB%AC%B8%EC%8B%9C%EC%9E%A5" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Namdaemun+Market" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">09:15</div>
+                        <div class="acc-title">南大門市場</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%82%A8%EB%8C%80%EB%AC%B8%EC%8B%9C%EC%9E%A5" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Namdaemun+Market" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">11:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">樂天超市 首爾站</div>
-                        <div class="card-detail">採買後回飯店放東西，再前往龍山</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8%20%EC%84%9C%EC%9A%B8%EC%97%AD%EC%A0%90" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Seoul+Station" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">11:15</div>
+                        <div class="acc-title">樂天超市 首爾站</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">採買後回飯店放東西，再前往龍山</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8%20%EC%84%9C%EC%9A%B8%EC%97%AD%EC%A0%90" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Seoul+Station" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">14:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">龍山解放村</div>
-                        <div class="card-detail">CAFE TAJAGI / Villa Coffeebar</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%ED%95%B4%EB%B0%A9%EC%B4%8C" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Haebangchon" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">14:30</div>
+                        <div class="acc-title">龍山解放村</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">CAFE TAJAGI / Villa Coffeebar</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%ED%95%B4%EB%B0%A9%EC%B4%8C" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Haebangchon" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">18:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">弘大商圈 (一片里肌)</div>
-                        <div class="card-detail">晚餐預約 19:30</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Ilpyeon+Deungsim+Hongdae" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item food-marker" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">18:00</div>
+                        <div class="acc-title">弘大商圈 (一片里肌)</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">晚餐預約 19:30</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Ilpyeon+Deungsim+Hongdae" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="day4" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">10:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">奉恩寺</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EB%B4%89%EC%9D%80%EC%82%AC" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Bongeunsa" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">10:00</div>
+                        <div class="acc-title">奉恩寺</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EB%B4%89%EC%9D%80%EC%82%AC" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Bongeunsa" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">11:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">Gom Ba Wie</div>
-                        <div class="card-detail">午餐：韓牛、牛腸</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EA%B3%B0%EB%B0%94%EC%9C%84" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Gom+Ba+Wie" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item food-marker" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">11:30</div>
+                        <div class="acc-title">Gom Ba Wie</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">午餐：韓牛、牛腸</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EA%B3%B0%EB%B0%94%EC%9C%84" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Gom+Ba+Wie" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time-col">13:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">江南大道</div>
-                        <div class="card-detail">逛街購物</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Gangnam-daero" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">13:30</div>
+                        <div class="acc-title">江南大道</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">逛街購物</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Gangnam-daero" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="day5" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">11:10</div>
-                    <div class="content-col">
-                        <div class="card-big-text">金浦機場 (GMP)</div>
-                        <div class="card-detail">回程班機</div>
-                        <div class="map-links">
-                            <a href="https://map.naver.com/p/search/%EA%B9%80%ED%8F%AC%EA%B3%B5%ED%95%AD" target="_blank" class="map-link n-map">Naver</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=Gimpo+International+Airport" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                <div class="accordion-item" onclick="toggleAcc(this)">
+                    <div class="accordion-header">
+                        <div class="acc-time">11:10</div>
+                        <div class="acc-title">金浦機場 (GMP)</div>
+                        <i class="fas fa-chevron-down acc-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="acc-detail">回程班機</div>
+                            <div class="map-links">
+                                <a href="https://map.naver.com/p/search/%EA%B9%80%ED%8F%AC%EA%B3%B5%ED%95%AD" target="_blank" class="map-link n-map">Naver</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Gimpo+International+Airport" target="_blank" class="map-link g-map"><i class="fab fa-google"></i> Map</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -597,7 +683,7 @@
             navItems.forEach(n => n.classList.remove('active'));
             navElement.classList.add('active');
             
-            // 關鍵：切換頁面時，強制回到網頁最上方
+            // 關鍵：強制回到最上方
             window.scrollTo(0,0);
         }
 
@@ -608,6 +694,27 @@
             dayTabs.forEach(dt => dt.classList.remove('active'));
             document.getElementById(dayId).classList.add('active');
             tabElement.classList.add('active');
+        }
+
+        // 手風琴效果控制
+        function toggleAcc(element) {
+            // 關閉其他已開啟的項目 (排他性)
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('open');
+                    item.querySelector('.accordion-content').style.maxHeight = null;
+                }
+            });
+
+            // 切換當前項目
+            element.classList.toggle('open');
+            var content = element.querySelector('.accordion-content');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
         }
     </script>
 </body>
