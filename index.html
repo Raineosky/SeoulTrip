@@ -6,17 +6,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1A1A2E">
-    <title>FEARLESS SEOUL TRIP</title>
+    <title>FEARLESS SEOUL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* LE SSERAFIM 風格配色：深藍、帥氣黑、霓虹紫粉 */
+            /* LE SSERAFIM 配色 */
             --bg-main: #F8F9FA;
             --bg-dark: #1A1A2E;
-            --primary: #6C5CE7; /* 霓虹紫 */
-            --accent: #FD79A8;  /* 活力粉 */
+            --primary: #6C5CE7;
+            --accent: #FD79A8;
             --text-dark: #2D3436;
-            --text-light: #DFE6E9;
+            --text-light: #FFFFFF;
             --card-bg: #FFFFFF;
             --nav-height: 65px;
             --safe-area-bottom: env(safe-area-inset-bottom);
@@ -27,65 +27,65 @@
         body {
             background-color: var(--bg-main);
             color: var(--text-dark);
-            height: 100dvh; /* 使用動態視口高度 */
+            height: 100dvh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* 防止整體滾動，內容區域自己滾動 */
+            overflow: hidden;
         }
 
-        /* --- 主頁 Hero Section --- */
+        /* --- 主頁 Hero Section (更新重點) --- */
         #section-home {
             height: 100%;
             background-color: var(--bg-dark);
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-image {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 80%;
-            /* ▼▼▼ 請在這裡替換成你的 LE SSERAFIM 照片網址 ▼▼▼ */
-            background-image: url('https://placehold.co/600x800/1A1A2E/FFF?text=LE+SSERAFIM+PHOTO+HERE');
-            /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* 更新照片連結 */
+            background-image: url('https://4kwallpapers.com/images/wallpapers/le-sserafim-hot-3840x2160-21956.jpg');
             background-size: cover;
-            background-position: center top;
+            /* 橫式照片在手機上置中，確保成員入鏡 */
+            background-position: center center; 
             z-index: 0;
         }
         
+        /* 黑色遮罩，讓文字稍微清楚一點，但不要太深 */
         .hero-overlay {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 80%;
-            background: linear-gradient(to bottom, rgba(26,26,46,0.1), rgba(26,26,46,1));
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%);
             z-index: 1;
         }
 
         .home-content {
+            position: absolute;
             z-index: 2;
-            padding: 30px;
+            width: 100%;
             text-align: center;
-            margin-bottom: calc(var(--nav-height) + 20px);
+            /* 依照需求：往上縮三分之二 (大約在畫面上方 30% 的位置) */
+            top: 20%; 
         }
 
+        /* FEARLESS LOGO 風格文字 */
         .home-title {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-style: italic;
+            color: #FFFFFF;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(108, 92, 231, 0.8);
+            /* 模擬 Logo 的邊框感 */
+            -webkit-text-stroke: 1px rgba(255,255,255,0.8);
         }
 
-        .home-subtitle { font-size: 16px; opacity: 0.8; letter-spacing: 2px; text-transform: uppercase;}
-
-        /* --- 通用內容區域設定 --- */
+        /* --- 通用區塊 --- */
         .main-section {
-            display: none; /* 預設隱藏，透過 JS 切換 */
+            display: none;
             flex: 1;
-            overflow-y: auto; /* 讓內容可以滾動 */
+            overflow-y: auto;
             padding-bottom: calc(var(--nav-height) + var(--safe-area-bottom) + 20px);
             background: var(--bg-main);
         }
@@ -105,7 +105,7 @@
         }
         .page-header h2 { font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 
-        /* --- 卡片通用樣式 --- */
+        /* --- 內容卡片樣式 --- */
         .container { padding: 0 20px; }
         .info-card {
             background: var(--card-bg);
@@ -123,29 +123,20 @@
         .info-label { color: #888; font-size: 14px; }
         .info-value { font-weight: 600; font-size: 15px; text-align: right;}
 
-        /* --- 行程頁籤 (重用之前的樣式並微調) --- */
+        /* --- 行程時間軸 --- */
         .tabs-header-container {
             position: sticky;
-            top: 75px; /* 配合 page-header 的高度 */
+            top: 75px;
             background: var(--bg-main);
             z-index: 9;
             padding: 10px 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
-        .tabs-scroll {
-            display: flex;
-            overflow-x: auto;
-            padding: 0 15px;
-            gap: 10px;
-        }
+        .tabs-scroll { display: flex; overflow-x: auto; padding: 0 15px; gap: 10px; }
         .tabs-scroll::-webkit-scrollbar { display: none; }
         .day-tab-btn {
-            background: white;
-            border: 1px solid #eee;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 14px; color: #666; font-weight: 600;
-            white-space: nowrap; transition: all 0.3s;
+            background: white; border: 1px solid #eee; padding: 8px 18px; border-radius: 30px;
+            font-size: 14px; color: #666; font-weight: 600; white-space: nowrap; transition: all 0.3s;
         }
         .day-tab-btn.active {
             background: var(--primary); color: white; border-color: var(--primary);
@@ -154,7 +145,6 @@
         .day-content { display: none; padding: 20px 0; }
         .day-content.active { display: block; animation: fadeIn 0.4s ease; }
         
-        /* 行程時間軸卡片 */
         .timeline-item { display: flex; margin-bottom: 20px; }
         .time-col { font-size: 13px; font-weight: 800; color: var(--primary); min-width: 75px; padding-top: 5px;}
         .content-col { flex: 1; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;}
@@ -166,392 +156,10 @@
         .g-map { background: #f1f3f4; color: #3c4043; }
         .n-map { background: #03C75A; color: white; }
 
-        /* --- 底部導航列 Bottom Navigation --- */
+        /* --- 底部導航列 --- */
         .bottom-nav {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             height: calc(var(--nav-height) + var(--safe-area-bottom));
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            padding-top: 10px;
-            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
-            z-index: 100;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 11px;
-            font-weight: 600;
-            width: 20%;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .nav-item i { font-size: 20px; margin-bottom: 4px; }
-        .nav-item.active { color: var(--primary); }
-        .nav-item.active i { transform: scale(1.1); transition: transform 0.2s; }
-
-    </style>
-</head>
-<body>
-
-    <section id="section-home" class="main-section active" style="padding-bottom: 0;">
-        <div class="hero-image"></div>
-        <div class="hero-overlay"></div>
-        <div class="home-content">
-            <h1 class="home-title">FEARLESS SEOUL</h1>
-            <p class="home-subtitle">2026.01.28 - 02.01 Trip</p>
-        </div>
-    </section>
-
-    <section id="section-itinerary" class="main-section">
-        <div class="page-header">
-            <h2><i class="fas fa-route"></i> 行程總覽</h2>
-        </div>
-        <div class="tabs-header-container">
-            <div class="tabs-scroll">
-                <button class="day-tab-btn active" onclick="openDay('day1', this)">Day 1 (1/28)</button>
-                <button class="day-tab-btn" onclick="openDay('day2', this)">Day 2 (1/29)</button>
-                <button class="day-tab-btn" onclick="openDay('day3', this)">Day 3 (1/30)</button>
-                <button class="day-tab-btn" onclick="openDay('day4', this)">Day 4 (1/31)</button>
-                <button class="day-tab-btn" onclick="openDay('day5', this)">Day 5 (2/01)</button>
-            </div>
-        </div>
-        <div class="container">
-            <div id="day1" class="day-content active">
-                <div class="timeline-item">
-                    <div class="time-col">14:05</div>
-                    <div class="content-col">
-                        <div class="card-big-text">抵達韓國金浦機場 (GMP)</div>
-                        <div class="card-detail">17:30 前完成入境手續。<br>搭乘 <b style="color:var(--primary)">5號線</b> (金浦機場 → 乙支路4街站)</div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-col">19:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">飯店 Check-in</div>
-                        <div class="card-detail">WecoStay 明洞 (從乙支路4街站步行)</div>
-                    </div>
-                </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">20:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">晚餐：荒謬的生肉 明洞店</div>
-                        <div class="card-detail">移動：走路到忠武路站搭4號線 → 明洞站6號出口。<br>行程包含換匯。</div>
-                        <div class="map-links"><a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-            </div>
-            <div id="day2" class="day-content">
-                 <div class="timeline-item">
-                    <div class="time-col">09:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">景福宮</div>
-                        <div class="card-detail">交通：忠武路站(5號線) → 景福宮4號出口。<br>體驗韓服、參觀宮殿。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B2%BD%EB%B3%B5%EA%B6%81" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                 <div class="timeline-item food-marker">
-                    <div class="time-col">12:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">午餐：三清洞摩西年糕鍋</div>
-                        <div class="card-detail">吃休錢走年糕鍋。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%A/9%EC%89%AC%EB%8F%88%EB%82%98" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                 <div class="timeline-item">
-                    <div class="time-col">14:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">北村韓屋村 & 益善洞</div>
-                        <div class="card-detail">走路散步行程。<br>16:00 移動到益善洞韓屋村喝咖啡。</div>
-                    </div>
-                </div>
-                 <div class="timeline-item food-marker">
-                    <div class="time-col">18:10</div>
-                    <div class="content-col">
-                        <div class="card-big-text">晚餐：廣藏市場</div>
-                        <div class="card-detail">交通：鐘路3街站(5號線) → 乙支路4街站4號出口。<br>目標：富村生拌牛肉。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-            </div>
-            <div id="day3" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">09:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">南大門市場</div>
-                        <div class="card-detail">交通：忠武路站(4號線) → 會賢站3號出口。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%82%A8%EB%8C%80%EB%AC%B8%EC%8B%9C%EC%9E%A5" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-col">11:15</div>
-                    <div class="content-col">
-                        <div class="card-big-text">樂天超市 首爾站 + 午餐</div>
-                        <div class="card-detail">會賢站(4號線) → 首爾站14號出口。<br>採買後回飯店放東西，再搭計程車去龍山。</div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-col">14:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">龍山解放村</div>
-                        <div class="card-detail">看夕陽咖啡廳：CAFE TAJAGI / Villa Coffeebar。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%ED%95%B4%EB%B0%A9%EC%B4%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">18:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">弘大商圈 + 晚餐</div>
-                        <div class="card-detail">搭計程車前往。<br>晚餐：一片里肌弘大店 (預計19:30)。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-            </div>
-            <div id="day4" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">10:00</div>
-                    <div class="content-col">
-                        <div class="card-big-text">奉恩寺</div>
-                        <div class="card-detail">交通：忠武路站(3號線) → 狎鷗亭3號出口 → 轉計程車。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B4%89%EC%9D%80%EC%82%AC" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                <div class="timeline-item food-marker">
-                    <div class="time-col">11:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">午餐：Gom Ba Wie</div>
-                        <div class="card-detail">頂級韓牛、牛腸料理。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B3%B0%EB%B0%94%EC%9C%84" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-col">13:30</div>
-                    <div class="content-col">
-                        <div class="card-big-text">江南大道</div>
-                        <div class="card-detail">搭地鐵前往，下午逛街行程。</div>
-                         <div class="map-links"><a href="https://map.naver.com/p/search/%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C" target="_blank" class="map-link n-map">Naver Map</a></div>
-                    </div>
-                </div>
-            </div>
-            <div id="day5" class="day-content">
-                <div class="timeline-item">
-                    <div class="time-col">11:10</div>
-                    <div class="content-col">
-                        <div class="card-big-text">回程班機</div>
-                        <div class="card-detail">金浦機場 (GMP) T1 ✈️ 臺北松山 (TSA) T1</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-food" class="main-section">
-        <div class="page-header">
-            <h2><i class="fas fa-utensils"></i> 精選美食</h2>
-        </div>
-        <div class="container">
-            <p class="card-label">行程內餐廳</p>
-            <div class="info-card">
-                <div class="card-big-text">荒謬的生肉 明洞店</div>
-                <div class="card-detail">Day 1 晚餐 | 高CP值烤肉吃到飽</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-            <div class="info-card">
-                <div class="card-big-text">富村生拌牛肉 (廣藏市場)</div>
-                <div class="card-detail">Day 2 晚餐 | 米其林推薦生牛肉、活章魚</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-            <div class="info-card">
-                <div class="card-big-text">一片里肌 弘大店</div>
-                <div class="card-detail">Day 3 晚餐 | 精緻韓牛烤肉 (已預約)</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-
-            <p class="card-label" style="margin-top: 30px;">周邊加碼推薦</p>
-             <div class="info-card">
-                <div class="card-big-text">明洞餃子 (명동교자)</div>
-                <div class="card-detail">位置：明洞 | 必吃刀削麵與蒸餃名店。</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EB%AA%85%EB%8F%99%EA%B5%90%EC%9E%90%20%EB%B3%B8%EC%A0%90" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-            <div class="info-card">
-                <div class="card-big-text">Onion 安國店 (어니언 안국)</div>
-                <div class="card-detail">位置：北村附近 | 超人氣韓屋咖啡廳，麵包好吃。</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%B9%B4%ED%8E%98%20%EC%96%B4%EB%8B%88%EC%96%B8%20%EC%95%88%EA%B5%AD" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-            <div class="info-card">
-                <div class="card-big-text">申美京辣炒雞排 (신미경홍대닭갈비)</div>
-                <div class="card-detail">位置：弘大 | 起司瀑布辣炒雞排，弘大逛街首選。</div>
-                <div class="map-links"><a href="https://map.naver.com/p/search/%EC%8B%A0%EB%AF%B8%EA%B2%BD%ED%99%8D%EB%8C%80%EB%8B%AD%EA%B0%88%EB%B9%84" target="_blank" class="map-link n-map">Naver Map</a></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-stay" class="main-section">
-        <div class="page-header">
-            <h2><i class="fas fa-bed"></i> 住宿資訊</h2>
-        </div>
-        <div class="container">
-            <div class="info-card">
-                <span class="card-label">HOTEL</span>
-                <div class="card-big-text">WecoStay 明洞</div>
-                <div class="card-detail">位於乙支路4街站附近，交通便利的公寓式酒店。</div>
-                
-                <div class="info-row" style="margin-top: 20px;">
-                    <span class="info-label">入住日期</span>
-                    <span class="info-value">1月28日 - 2月1日 (4晚)</span>
-                </div>
-                 <div class="info-row">
-                    <span class="info-label">Check-in</span>
-                    <span class="info-value">16:00 後</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Check-out</span>
-                    <span class="info-value">11:00 前</span>
-                </div>
-
-                <div class="map-links" style="margin-top: 20px;">
-                    <a href="https://map.naver.com/p/search/WecoStay%20Myeongdong" target="_blank" class="map-link n-map" style="padding: 12px; font-size: 14px;">開啟 Naver Map 導航</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-flight" class="main-section">
-        <div class="page-header">
-            <h2><i class="fas fa-plane"></i> 航班資訊</h2>
-        </div>
-        <div class="container">
-            <div class="info-card" style="border-left: 5px solid var(--primary);">
-                <span class="card-label"><i class="fas fa-plane-departure"></i> 去程 | 1月28日 (三)</span>
-                <div class="card-big-text" style="color: var(--primary);">德威航空 TW668</div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 24px; font-weight: 800;">14:05</div>
-                        <div style="font-size: 14px; color:#666;">臺北松山 (TSA)</div>
-                        <div style="font-size: 14px; color:var(--primary); font-weight:bold;">T1 第一航廈</div>
-                    </div>
-                    <i class="fas fa-arrow-right" style="color: #ddd; font-size: 20px;"></i>
-                    <div style="text-align: center;">
-                        <div style="font-size: 24px; font-weight: 800;">17:30</div>
-                        <div style="font-size: 14px; color:#666;">首爾金浦 (GMP)</div>
-                        <div style="font-size: 14px; color:var(--primary); font-weight:bold;">T1 第一航廈</div>
-                    </div>
-                </div>
-                 <div class="card-detail" style="text-align: center; background: #f0f2f5; padding: 8px; border-radius: 8px;">
-                    飛行時間約 2小時 25分
-                </div>
-            </div>
-
-            <div class="info-card" style="border-left: 5px solid var(--accent);">
-                <span class="card-label" style="color: var(--accent);"><i class="fas fa-plane-arrival"></i> 回程 | 2月1日 (日)</span>
-                <div class="card-big-text" style="color: var(--accent);">德威航空 TW667</div>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 24px; font-weight: 800;">11:10</div>
-                        <div style="font-size: 14px; color:#666;">首爾金浦 (GMP)</div>
-                         <div style="font-size: 14px; color:var(--accent); font-weight:bold;">T1 第一航廈</div>
-                    </div>
-                    <i class="fas fa-arrow-right" style="color: #ddd; font-size: 20px;"></i>
-                    <div style="text-align: center;">
-                        <div style="font-size: 24px; font-weight: 800;">13:05</div>
-                        <div style="font-size: 14px; color:#666;">臺北松山 (TSA)</div>
-                         <div style="font-size: 14px; color:var(--accent); font-weight:bold;">T1 第一航廈</div>
-                    </div>
-                </div>
-                <div class="card-detail" style="text-align: center; background: #f0f2f5; padding: 8px; border-radius: 8px;">
-                    飛行時間約 2小時 55分
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="section-weather" class="main-section">
-        <div class="page-header">
-             <h2><i class="fas fa-cloud-sun"></i> 首爾天氣</h2>
-        </div>
-        <div class="container">
-            <div class="info-card" style="padding: 0; overflow: hidden; background: transparent; box-shadow: none;">
-                <a class="weatherwidget-io" href="https://forecast7.com/zh/37d57126d98/seoul/" data-label_1="SEOUL" data-label_2="當週天氣概況" data-font="Roboto" data-icons="Climacons Animated" data-mode="Forecast" data-theme="weather_one" >SEOUL Weather</a>
-                <script>
-                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-                </script>
-            </div>
-        </div>
-    </section>
-
-
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchSection('section-home', this)">
-            <i class="fas fa-home"></i>
-            <span>首頁</span>
-        </div>
-        <div class="nav-item" onclick="switchSection('section-itinerary', this)">
-            <i class="fas fa-list-ul"></i>
-            <span>行程</span>
-        </div>
-         <div class="nav-item" onclick="switchSection('section-weather', this)">
-            <i class="fas fa-cloud-sun"></i>
-            <span>天氣</span>
-        </div>
-        <div class="nav-item" onclick="switchSection('section-food', this)">
-            <i class="fas fa-utensils"></i>
-            <span>美食</span>
-        </div>
-        <div class="nav-item" onclick="switchSection('section-stay', this)">
-            <i class="fas fa-bed"></i>
-            <span>住宿</span>
-        </div>
-        <div class="nav-item" onclick="switchSection('section-flight', this)">
-            <i class="fas fa-plane"></i>
-            <span>航班</span>
-        </div>
-    </nav>
-
-    <script>
-        // 切換底部主要分頁
-        function switchSection(sectionId, navElement) {
-            // 隱藏所有 Section
-            const sections = document.querySelectorAll('.main-section');
-            sections.forEach(s => s.classList.remove('active'));
-            
-            // 移除所有 Nav active 狀態
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(n => n.classList.remove('active'));
-
-            // 顯示目標 Section 並啟用 Nav
-            document.getElementById(sectionId).classList.add('active');
-            navElement.classList.add('active');
-            
-            // 如果不是首頁，滾動到最上方
-            if(sectionId !== 'section-home') {
-                 document.getElementById(sectionId).scrollTo(0,0);
-            }
-        }
-
-        // 切換行程裡面的 Day 分頁
-        function openDay(dayId, tabElement) {
-            // 隱藏所有 Day Content
-            const dayContents = document.querySelectorAll('.day-content');
-            dayContents.forEach(dc => dc.classList.remove('active'));
-            
-            // 移除所有 Tab active 狀態
-            const dayTabs = document.querySelectorAll('.day-tab-btn');
-            dayTabs.forEach(dt => dt.classList.remove('active'));
-
-            // 顯示目標 Day 並啟用 Tab
-            document.getElementById(dayId).classList.add('active');
-            tabElement.classList.add('active');
-        }
-    </script>
-
-</body>
-</html>
