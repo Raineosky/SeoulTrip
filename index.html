@@ -4,318 +4,411 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="首爾行程">
     <title>首爾五天四夜之旅</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4A90E2;
-            --accent: #FF6B6B;
-            --bg: #F5F7FA;
-            --card-bg: #FFFFFF;
-            --text: #333333;
-            --sub-text: #666666;
+            --primary: #5D5FEF; /* 活潑的藍紫色 */
+            --primary-light: #E5E6FF;
+            --accent: #FF4757;   /* 重點標示紅 */
+            --bg: #F0F2F5;
+            --card: #FFFFFF;
+            --text: #2F3542;
+            --naver: #03C75A;    /* Naver 綠 */
+            --google: #4285F4;   /* Google 藍 */
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        
-        body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; -webkit-overflow-scrolling: touch; }
-        
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
+
+        /* Header Area */
         header {
-            background: linear-gradient(135deg, var(--primary), #357ABD);
+            background: linear-gradient(135deg, var(--primary), #8E2DE2);
             color: white;
-            padding: 40px 20px 20px;
+            padding: 20px 20px 10px;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 4px 15px rgba(93, 95, 239, 0.3);
+            text-align: center;
+        }
+
+        h1 { font-size: 22px; margin-bottom: 5px; font-weight: 800; }
+        p.subtitle { font-size: 13px; opacity: 0.9; margin-bottom: 15px; }
+
+        /* Weather Widget Container */
+        .weather-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 { font-size: 24px; font-weight: 700; margin-bottom: 5px; }
-        p.subtitle { font-size: 14px; opacity: 0.9; }
-
-        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
-        
-        .day-header {
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin: 25px 0 15px 0;
-            font-weight: bold;
-            display: inline-block;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: -20px;
-            width: 2px;
-            background-color: #ddd;
-            z-index: 0;
-        }
-
-        .timeline-item:last-child::before { display: none; }
-
-        .time-box {
-            min-width: 70px;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--primary);
             background: var(--bg);
-            z-index: 1;
-            padding-right: 10px;
-            text-align: right;
-            padding-top: 2px;
+            padding: 10px 5px;
+            z-index: 99;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .content-card {
-            flex: 1;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 1;
-        }
+        .tabs-container::-webkit-scrollbar { display: none; }
 
-        .content-card h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-            color: var(--text);
-        }
-
-        .content-card p {
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 4px;
+            border-radius: 20px;
             font-size: 14px;
-            color: var(--sub-text);
-            line-height: 1.5;
-            white-space: pre-line;
+            color: #747d8c;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .highlight { color: var(--accent); font-weight: bold; }
-        
-        .transport {
-            font-size: 12px;
-            background: #EBF5FF;
-            color: #2C5282;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-top: 8px;
-            display: inline-block;
-        }
-
-        .food {
-            border-left: 3px solid var(--accent);
-        }
-
-        /* Go to Top Button */
-        .fab {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+        .tab-btn.active {
             background: var(--primary);
             color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(93, 95, 239, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Content Area */
+        .tab-content { display: none; padding: 15px; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Timeline Card */
+        .timeline-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            border-left: 5px solid var(--primary);
+        }
+
+        .timeline-card.food { border-left-color: var(--accent); }
+
+        .time-badge {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .timeline-card.food .time-badge {
+            background: #FFE5E8;
+            color: var(--accent);
+        }
+
+        .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; }
+        .card-title i { margin-right: 8px; font-size: 15px; }
+        
+        .card-desc { font-size: 14px; color: #57606f; line-height: 1.5; margin-bottom: 12px; }
+        .highlight { color: var(--accent); font-weight: bold; }
+
+        /* Map Buttons */
+        .map-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .map-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            font-weight: bold;
-            text-decoration: none;
-            z-index: 200;
+            gap: 5px;
+        }
+
+        .btn-google { background: #f1f3f4; color: var(--text); border: 1px solid #dadce0; }
+        .btn-naver { background: #E6F9EE; color: var(--naver); border: 1px solid #B8EBD0; }
+        
+        .map-btn:active { transform: scale(0.98); }
+
+        /* Transport Info */
+        .transport-info {
+            background: #F8F9FA;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🇰🇷 韓國首爾 5日遊</h1>
-    <p class="subtitle">2026/01/28 - 2026/02/01</p>
+    <h1>🇰🇷 SEOUL TRIP</h1>
+    <p class="subtitle">2026.01.28 - 02.01</p>
+    
+    <div class="weather-box">
+        <a class="weatherwidget-io" href="https://forecast7.com/zh/37d57126d98/seoul/" data-label_1="SEOUL" data-label_2="WEATHER" data-font="Roboto" data-icons="Climacons Animated" data-mode="Current" data-theme="pure" data-basecolor="" >SEOUL WEATHER</a>
+        <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+        </script>
+    </div>
 </header>
+
+<div class="tabs-container">
+    <button class="tab-btn active" onclick="openTab('day1')">Day 1<br><small>1/28</small></button>
+    <button class="tab-btn" onclick="openTab('day2')">Day 2<br><small>1/29</small></button>
+    <button class="tab-btn" onclick="openTab('day3')">Day 3<br><small>1/30</small></button>
+    <button class="tab-btn" onclick="openTab('day4')">Day 4<br><small>1/31</small></button>
+    <button class="tab-btn" onclick="openTab('day5')">Day 5<br><small>2/01</small></button>
+</div>
 
 <div class="container">
 
-    <div class="day-header">Day 1 | 1月28日 (三)</div>
-    
-    <div class="timeline-item">
-        <div class="time-box">14:05</div>
-        <div class="content-card">
-            <h3>抵達韓國</h3>
-            <p>臺北松山機場T1 ✈️ 韓國金浦機場</p>
+    <div id="day1" class="tab-content active">
+        <div class="timeline-card">
+            <span class="time-badge">14:05 - 17:30</span>
+            <div class="card-title"><i class="fas fa-plane"></i> 抵達首爾</div>
+            <div class="card-desc">臺北松山 T1 ➔ 金浦機場 (GMP)</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Gimpo+International+Airport" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/Gimpo%20Airport" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
-    </div>
-    
-    <div class="timeline-item">
-        <div class="time-box">17:30</div>
-        <div class="content-card">
-            <h3>入境與移動</h3>
-            <p>辦理入境手續</p>
-            <div class="transport">18:30 搭乘5號線地鐵 → 乙支路4街站</div>
+
+        <div class="timeline-card">
+            <span class="time-badge">18:30 - 19:20</span>
+            <div class="card-title"><i class="fas fa-subway"></i> 前往飯店</div>
+            <div class="card-desc">
+                入境後搭乘 <span class="highlight">5號線</span> 地鐵<br>
+                金浦機場站 ➔ 乙支路4街站
+            </div>
         </div>
-    </div>
 
-    <div class="timeline-item">
-        <div class="time-box">19:20</div>
-        <div class="content-card">
-            <h3>飯店 Check-in</h3>
-            <p><strong>WecoStay 明洞</strong></p>
-            <p>從乙支路4站步行前往</p>
+        <div class="timeline-card">
+            <span class="time-badge">19:30</span>
+            <div class="card-title"><i class="fas fa-hotel"></i> WecoStay 明洞</div>
+            <div class="card-desc">從乙支路4街站步行前往 Check-in</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=WecoStay+Myeongdong" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/WecoStay%20Myeongdong" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
-    </div>
 
-    <div class="timeline-item">
-        <div class="time-box">20:00</div>
-        <div class="content-card food">
-            <h3>晚餐：荒謬的生肉 明洞店</h3>
-            <p>從飯店走到忠武路8號出口 → 搭4號線至明洞站 → 6號出口</p>
-            <p>包含：換匯行程</p>
-        </div>
-    </div>
-
-    <div class="day-header">Day 2 | 1月29日 (四)</div>
-
-    <div class="timeline-item">
-        <div class="time-box">09:00</div>
-        <div class="content-card">
-            <h3>前往景福宮</h3>
-            <div class="transport">忠武路站2號入口 → 搭5號線 → 景福宮4號出口</div>
+        <div class="timeline-card food">
+            <span class="time-badge">20:15 - 22:00</span>
+            <div class="card-title"><i class="fas fa-utensils"></i> 荒謬的生肉 明洞店</div>
+            <div class="card-desc">
+                晚餐 + 換匯<br>
+                <div class="transport-info"><i class="fas fa-walking"></i> 飯店走至忠武路8號出口 ➔ 4號線至明洞站 ➔ 6號出口</div>
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Ungteori+Saenggogi+Myeongdong" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EC%97%89%ED%84%B0%EB%A6%AC%EC%83%9D%EA%B3%A0%EA%B8%B0%20%EB%AA%85%EB%8F%99" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
     </div>
 
-    <div class="timeline-item">
-        <div class="time-box">09:30</div>
-        <div class="content-card">
-            <h3>逛景福宮</h3>
-            <p>體驗韓服、參觀宮殿</p>
+    <div id="day2" class="tab-content">
+        <div class="timeline-card">
+            <span class="time-badge">09:30 - 12:00</span>
+            <div class="card-title"><i class="fas fa-landmark"></i> 景福宮</div>
+            <div class="card-desc">
+                忠武路站2號入口 ➔ 5號線 ➔ 景福宮4號出口<br>
+                <span class="highlight">記得租借韓服體驗！</span>
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EA%B2%BD%EB%B3%B5%EA%B6%81" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card food">
+            <span class="time-badge">12:00 - 14:00</span>
+            <div class="card-title"><i class="fas fa-utensils"></i> 三清洞摩西年糕鍋</div>
+            <div class="card-desc">午餐時間 (吃休錢走)</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Mukshidonna+Samcheongdong" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%A/9%EC%89%AC%EB%8F%88%EB%82%98" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card">
+            <span class="time-badge">14:00 - 16:00</span>
+            <div class="card-title"><i class="fas fa-camera"></i> 北村韓屋村</div>
+            <div class="card-desc">散步拍照行程</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Bukchon+Hanok+Village" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%B6%81%EC%B4%8C%ED%95%9C%EC%98%A5%EB%A7%88%EC%9D%84" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card">
+            <span class="time-badge">16:00 - 18:00</span>
+            <div class="card-title"><i class="fas fa-coffee"></i> 益善洞韓屋村</div>
+            <div class="card-desc">文青咖啡廳、小店逛街</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Ikseon-dong+Hanok+Village" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EC%9D%B5%EC%84%A0%EB%8F%99" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card food">
+            <span class="time-badge">18:10 - 20:00</span>
+            <div class="card-title"><i class="fas fa-drumstick-bite"></i> 廣藏市場 (富村生拌牛肉)</div>
+            <div class="card-desc">
+                鐘路3街站 ➔ 乙支路4街站<br>
+                必吃：綠豆煎餅、生拌牛肉
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Gwangjang+Market" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%B6%80%EC%B4%8C%EC%9C%A1%ED%9A%8C" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
     </div>
 
-    <div class="timeline-item">
-        <div class="time-box">12:00</div>
-        <div class="content-card food">
-            <h3>午餐：三清洞摩西年糕鍋</h3>
+    <div id="day3" class="tab-content">
+        <div class="timeline-card">
+            <span class="time-badge">09:15 - 11:00</span>
+            <div class="card-title"><i class="fas fa-shopping-basket"></i> 南大門市場</div>
+            <div class="card-desc">忠武路站 ➔ 會賢站3號出口</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Namdaemun+Market" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%82%A8%EB%8C%80%EB%AC%B8%EC%8B%9C%EC%9E%A5" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card">
+            <span class="time-badge">11:15 - 14:00</span>
+            <div class="card-title"><i class="fas fa-shopping-cart"></i> 樂天超市 首爾站</div>
+            <div class="card-desc">
+                採買伴手禮 + 午餐<br>
+                <div class="transport-info">行程後先回飯店放東西 ➔ 再搭計程車去龍山</div>
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Seoul+Station" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8%20%EC%84%9C%EC%9A%B8%EC%97%AD%EC%A0%90" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card">
+            <span class="time-badge">14:30 - 17:30</span>
+            <div class="card-title"><i class="fas fa-coffee"></i> 解放村 (夕陽咖啡)</div>
+            <div class="card-desc">
+                CAFE TAJAGI / Villa Coffeebar<br>
+                享受首爾夕陽景觀
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Haebangchon" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%ED%95%B4%EB%B0%A9%EC%B4%8C" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card food">
+            <span class="time-badge">18:00 - 20:00</span>
+            <div class="card-title"><i class="fas fa-fire"></i> 弘大商圈 (一片里肌)</div>
+            <div class="card-desc">
+                逛街、晚餐 (預約 19:30)<br>
+                <div class="transport-info">搭計程車前往</div>
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Ilpyeon+Deungsim+Hongdae" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EC%9D%BC%ED%8E%B8%EB%93%B1%EC%8B%AC%20%ED%99%8D%EB%8C%80" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
     </div>
 
-    <div class="timeline-item">
-        <div class="time-box">14:00</div>
-        <div class="content-card">
-            <h3>北村韓屋村</h3>
-            <p>散步拍照</p>
+    <div id="day4" class="tab-content">
+        <div class="timeline-card">
+            <span class="time-badge">10:00 - 11:30</span>
+            <div class="card-title"><i class="fas fa-om"></i> 奉恩寺</div>
+            <div class="card-desc">
+                忠武路站 ➔ 狎鷗亭3號出口 ➔ 計程車
+            </div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Bongeunsa" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EB%B4%89%EC%9D%80%EC%82%AC" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card food">
+            <span class="time-badge">11:30 - 13:00</span>
+            <div class="card-title"><i class="fas fa-utensils"></i> Gom Ba Wie (韓牛)</div>
+            <div class="card-desc">享用頂級韓牛、牛腸午餐</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Gom+Ba+Wie" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EA%B3%B0%EB%B0%94%EC%9C%84" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
+        </div>
+
+        <div class="timeline-card">
+            <span class="time-badge">13:30 - 18:00</span>
+            <div class="card-title"><i class="fas fa-city"></i> 江南大道</div>
+            <div class="card-desc">逛街購物行程</div>
+            <div class="map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=Gangnam-daero" target="_blank" class="map-btn btn-google"><i class="fab fa-google"></i> Google</a>
+                <a href="https://map.naver.com/p/search/%EA%B0%95%EB%82%A8%EB%8C%80%EB%A1%9C" target="_blank" class="map-btn btn-naver">Naver Map</a>
+            </div>
         </div>
     </div>
 
-    <div class="timeline-item">
-        <div class="time-box">16:00</div>
-        <div class="content-card">
-            <h3>益善洞韓屋村</h3>
-            <p>咖啡廳、文創小店</p>
+    <div id="day5" class="tab-content">
+        <div class="timeline-card">
+            <span class="time-badge">11:10 - 13:05</span>
+            <div class="card-title"><i class="fas fa-plane-departure"></i> 回程</div>
+            <div class="card-desc">金浦機場 ✈️ 臺灣</div>
         </div>
     </div>
-
-    <div class="timeline-item">
-        <div class="time-box">18:10</div>
-        <div class="content-card food">
-            <h3>晚餐：廣藏市場</h3>
-            <p class="highlight">必吃：富村生拌牛肉</p>
-            <div class="transport">鐘路3街站6號出口搭5號線 → 乙支路4街站4號出口</div>
-        </div>
-    </div>
-
-    <div class="day-header">Day 3 | 1月30日 (五)</div>
-
-    <div class="timeline-item">
-        <div class="time-box">09:00</div>
-        <div class="content-card">
-            <h3>南大門市場</h3>
-            <div class="transport">忠武路站8號出口搭4號線 → 會賢站3號出口</div>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">11:15</div>
-        <div class="content-card">
-            <h3>樂天超市 + 午餐</h3>
-            <p>會賢站3號出口搭4號線 → 首爾站14號出口</p>
-            <p><i>*行程後回飯店放東西，再搭計程車去龍山解放村</i></p>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">14:30</div>
-        <div class="content-card">
-            <h3>解放村 (夕陽/咖啡)</h3>
-            <p>推薦：CAFE TAJAGI, Villa Coffeebar</p>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">17:30</div>
-        <div class="content-card food">
-            <h3>弘大商圈 + 晚餐</h3>
-            <p>晚餐：一片里肌 弘大店 (預計19:30)</p>
-            <div class="transport">搭計程車前往弘大</div>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">20:00</div>
-        <div class="content-card">
-            <h3>返回飯店</h3>
-            <div class="transport">弘大入口站搭2號線 → 乙支路4街站 10號出口</div>
-        </div>
-    </div>
-
-    <div class="day-header">Day 4 | 1月31日 (六)</div>
-
-    <div class="timeline-item">
-        <div class="time-box">09:00</div>
-        <div class="content-card">
-            <h3>奉恩寺</h3>
-            <div class="transport">忠武路站2號出口搭3號線 → 狎鷗亭3號出口 → 計程車</div>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">11:30</div>
-        <div class="content-card food">
-            <h3>午餐：Gom Ba Wie</h3>
-            <p>韓牛、牛腸</p>
-        </div>
-    </div>
-
-    <div class="timeline-item">
-        <div class="time-box">13:30</div>
-        <div class="content-card">
-            <h3>江南大道</h3>
-            <p>逛街購物行程</p>
-            <div class="transport">搭地鐵前往江南</div>
-        </div>
-    </div>
-
-    <div class="day-header">Day 5 | 2月1日 (日)</div>
-
-    <div class="timeline-item">
-        <div class="time-box">11:10</div>
-        <div class="content-card">
-            <h3>回程</h3>
-            <p>金浦機場 ✈️ 臺灣</p>
-        </div>
-    </div>
-
 </div>
 
-<a href="#" class="fab">Top</a>
+<script>
+    function openTab(dayId) {
+        // 隱藏所有內容
+        var contents = document.getElementsByClassName('tab-content');
+        for (var i = 0; i < contents.length; i++) {
+            contents[i].classList.remove('active');
+        }
+        
+        // 移除所有按鈕的 active 狀態
+        var buttons = document.getElementsByClassName('tab-btn');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('active');
+        }
+
+        // 顯示選中的內容並標記按鈕
+        document.getElementById(dayId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        
+        // 滾動到頂部
+        window.scrollTo(0, 0);
+    }
+</script>
 
 </body>
 </html>
